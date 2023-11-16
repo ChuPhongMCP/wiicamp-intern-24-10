@@ -73,8 +73,8 @@ export async function getServerSideProps() {
     ]);
 
     // const [response, bestSelling] = await Promise.all([
-    //   axiosUser.get("https://api.escuelajs.co/api/v1/products/?offset=10&limit=20"),
-    //   axiosUser.get("https://api.escuelajs.co/api/v1/products/?offset=10&limit=4"),
+    //   axiosUser.get("https://api.escuelajs.co/api/v1/products/?limit=20"),
+    //   axiosUser.get("https://api.escuelajs.co/api/v1/products/?limit=4"),
     // ]);
 
     return {
