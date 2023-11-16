@@ -69,7 +69,5 @@ export default NextAuth({
 
   pages: {
     signIn: "/log-in",
-    signOut: "/log-in",
-    error: "/log-in",
   },
 });
