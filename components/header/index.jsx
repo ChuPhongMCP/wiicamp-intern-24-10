@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import classNames from "classnames";
+import { deleteCookie } from "cookies-next";
 import {
   AlignJustify,
   ChevronDown,
@@ -157,6 +158,9 @@ function Header() {
 
   const handleLogout = useCallback(async () => {
     resetCartItem();
+
+    deleteCookie("TOKEN");
+    deleteCookie("REFRESH_TOKEN");
 
     setIsOpenUserSetting(false);
 
