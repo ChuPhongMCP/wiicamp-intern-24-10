@@ -14,7 +14,7 @@ import useNotification from "@/store/showNotification";
 function Card(props) {
   const { product } = props;
 
-  const { status } = useSession();
+  const { data: session } = useSession();
 
   const timeoutNotificationRef = useRef(null);
 
@@ -34,7 +34,7 @@ function Card(props) {
 
   const handleClickAddToCart = useCallback(
     (item) => {
-      if (status === "authenticated") {
+      if (session && session.user) {
         const data = {
           id: item.id,
           name: item.title,
@@ -76,7 +76,7 @@ function Card(props) {
         router.push("/log-in");
       }
     },
-    [addToCart, closeNotification, closeScaleCart, openNotification, openScaleCart, router, status],
+    [addToCart, closeNotification, closeScaleCart, openNotification, openScaleCart, router, session],
   );
 
   return (

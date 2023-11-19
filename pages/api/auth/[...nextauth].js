@@ -3,6 +3,7 @@
 import { setCookie } from "cookies-next";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
+import FacebookProvider from "next-auth/providers/facebook";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -16,11 +17,19 @@ const nextAuthOptions = (req, res) => {
         clientId: process.env.NEXT_PUBLIC_GOOGLE_ID,
         clientSecret: process.env.NEXT_PUBLIC_GOOGLE_SECRET,
       }),
+
       GitHubProvider({
         name: "github",
         clientId: process.env.NEXT_PUBLIC_GITHUB_ID,
         clientSecret: process.env.NEXT_PUBLIC_GITHUB_SECRET,
       }),
+
+      FacebookProvider({
+        name: "facebook",
+        clientId: process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_ID,
+        clientSecret: process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_SECRET,
+      }),
+
       CredentialsProvider({
         name: "credentials",
         credentials: {},
@@ -60,6 +69,11 @@ const nextAuthOptions = (req, res) => {
 
     secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
 
+    session: {
+      strategy: "jwt",
+      maxAge: 15,
+    },
+
     callbacks: {
       async jwt({ token, user, trigger, session }) {
         if (trigger === "update") {
@@ -67,8 +81,10 @@ const nextAuthOptions = (req, res) => {
         }
         return { ...token, ...user };
       },
+
       async session({ session, token }) {
         session.user = token;
+        console.log("««««« session »»»»»", session);
         return session;
       },
     },
