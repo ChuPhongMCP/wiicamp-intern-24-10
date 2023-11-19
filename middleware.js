@@ -12,7 +12,7 @@ export default async function middleware(req, event) {
     });
 
     if (session) {
-      return NextResponse.rewrite(new URL("/", req.url));
+      return NextResponse.redirect(new URL("/", req.url));
     }
 
     return NextResponse.rewrite(currentUrl);
