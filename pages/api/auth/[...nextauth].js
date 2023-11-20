@@ -71,7 +71,7 @@ const nextAuthOptions = (req, res) => {
 
     session: {
       strategy: "jwt",
-      maxAge: 15,
+      maxAge: 2592000,
     },
 
     callbacks: {
