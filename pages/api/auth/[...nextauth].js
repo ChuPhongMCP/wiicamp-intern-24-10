@@ -71,7 +71,7 @@ const nextAuthOptions = (req, res) => {
 
     session: {
       strategy: "jwt",
-      maxAge: 15,
+      maxAge: 2592000,
     },
 
     callbacks: {
@@ -84,7 +84,7 @@ const nextAuthOptions = (req, res) => {
 
       async session({ session, token }) {
         session.user = token;
-        console.log("««««« session »»»»»", session);
+        // console.log("««««« session »»»»»", session);
         return session;
       },
     },

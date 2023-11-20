@@ -37,8 +37,6 @@ axiosClient.interceptors.response.use(
     if (error?.response?.status === 401 && error?.response?.data === "Unauthorized" && refreshToken) {
       const newToken = await refreshAccessToken(refreshToken);
 
-      console.log("««««« newToken »»»»»", newToken);
-
       if (newToken !== "Token refresh failed") {
         setCookie("TOKEN", newToken);
 
