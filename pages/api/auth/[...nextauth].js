@@ -124,8 +124,9 @@ const nextAuthOptions = (req, res) => {
 
       async jwt({ token, user, trigger, session }) {
         const getToken = getCookie("TOKEN", { req, res });
+        const getRefreshToken = getCookie("REFRESH_TOKEN", { req, res });
 
-        if (!getToken) {
+        if (!getToken || !getRefreshToken) {
           return null;
         }
 
