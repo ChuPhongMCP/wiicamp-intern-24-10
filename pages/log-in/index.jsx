@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import classNames from "classnames";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
@@ -11,6 +12,17 @@ import useCartStore from "@/store/cart/useCartStore";
 import styles from "./logIn.module.scss";
 
 function Login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const validation = {
+    username: { ...register("username", { required: true }) },
+    password: { ...register("password", { required: true }) },
+  };
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [isHaveError, setIsHaveError] = useState(false);
@@ -23,18 +35,13 @@ function Login() {
     resetCartItem();
   }, [resetCartItem]);
 
-  const handleSubmit = useCallback(async (e) => {
+  const onSubmit = useCallback(async (data) => {
     try {
-      e.preventDefault();
-
       setIsLoading(true);
 
-      const username = e.target.username.value;
-      const password = e.target.password.value;
-
       const res = await signIn("credentials", {
-        email: username,
-        password,
+        email: data.username,
+        password: data.password,
         redirect: false,
       });
 
@@ -104,7 +111,7 @@ function Login() {
           <div className={classNames("w-[57.4375rem] h-[44.125rem]", styles.left_banner)} />
         </div>
 
-        <form onSubmit={handleSubmit} className="flex flex-col items-center 2xl:items-start gap-[3rem]">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center 2xl:items-start gap-[3rem]">
           <div className="flex flex-col items-start gap-[1.5rem]">
             <span className="text-text-2 font-inter text-[2.25rem] font-[600] leading-[1.875rem] tracking-[0.09rem]">
               Log in to Exclusive
@@ -119,20 +126,40 @@ function Login() {
             <div className="flex flex-col items-start gap-[2.5rem]">
               <div className="flex flex-col items-start gap-[0.5rem] text-text-2 border-solid border-b-black border-b-[1px] border-opacity-50">
                 <input
-                  className="w-[23.125rem] h-[2rem] text-text-2 font-poppins text-[1rem] font-[400] leading-[1.5rem]"
+                  {...validation.username}
+                  className={classNames(
+                    "pl-[0.5rem] w-[23.125rem] h-[2rem] text-text-2 font-poppins text-[1rem] font-[400] leading-[1.5rem]",
+                    errors.username && "border-solid border-secondary-2 border-[2px]",
+                  )}
                   type="text"
                   name="username"
-                  placeholder="Email or Phone Number"
+                  placeholder="Email"
                 />
+
+                {errors.username && (
+                  <p className="w-[23.125rem] h-[2rem] text-secondary-2 font-poppins text-[1rem] font-[400] leading-[1.5rem]">
+                    Username is required.
+                  </p>
+                )}
               </div>
 
               <div className="flex flex-col items-start gap-[0.5rem] text-text-2 border-solid border-b-black border-b-[1px] border-opacity-50">
                 <input
-                  className="w-[23.125rem] h-[2rem] text-text-2 font-poppins text-[1rem] font-[400] leading-[1.5rem]"
+                  {...validation.password}
+                  className={classNames(
+                    "pl-[0.5rem] w-[23.125rem] h-[2rem] text-text-2 font-poppins text-[1rem] font-[400] leading-[1.5rem]",
+                    errors.password && "border-solid border-secondary-2 border-[2px]",
+                  )}
                   type="password"
                   name="password"
                   placeholder="Password"
                 />
+
+                {errors.password && (
+                  <p className="w-[23.125rem] h-[2rem] text-secondary-2 font-poppins text-[1rem] font-[400] leading-[1.5rem]">
+                    Password is required.
+                  </p>
+                )}
               </div>
             </div>
 
