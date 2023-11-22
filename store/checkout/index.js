@@ -11,11 +11,15 @@ const useFetchCheckout = create((set) => ({
   ...initialState,
 
   fetch: async (data) => {
-    const url = "/vnPay/create_payment_url";
+    try {
+      const url = "/vnPay/create_payment_url";
 
-    const response = await axiosClient.post(url, data);
+      const response = await axiosClient.post(url, data);
 
-    set({ payload: await response.data });
+      set({ payload: response.data });
+    } catch (error) {
+      set({ payload: error.response.data });
+    }
   },
 }));
 

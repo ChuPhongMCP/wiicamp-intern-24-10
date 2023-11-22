@@ -2,6 +2,8 @@ import axios from "axios";
 import { deleteCookie, getCookie, setCookie } from "cookies-next";
 import { signOut } from "next-auth/react";
 
+import { maxAgeCookies } from "@/constant";
+
 import { refreshAccessToken } from "./TokenService";
 
 const axiosClient = axios.create({
@@ -37,10 +39,8 @@ axiosClient.interceptors.response.use(
     if (error?.response?.status === 401 && error?.response?.data === "Unauthorized" && refreshToken) {
       const newToken = await refreshAccessToken(refreshToken);
 
-      console.log("««««« newToken »»»»»", newToken);
-
       if (newToken !== "Token refresh failed") {
-        setCookie("TOKEN", newToken);
+        setCookie("TOKEN", newToken, { maxAge: maxAgeCookies });
 
         originalConfig.sent = true;
 
@@ -50,8 +50,8 @@ axiosClient.interceptors.response.use(
         };
       } else {
         deleteCookie("TOKEN");
-
         deleteCookie("REFRESH_TOKEN");
+        deleteCookie("email");
 
         signOut({ callbackUrl: "/log-in" });
       }

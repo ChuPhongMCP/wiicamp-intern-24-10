@@ -1,11 +1,12 @@
 import React, { useCallback, useRef } from "react";
+import { deleteCookie, getCookie } from "cookies-next";
 import { Eye, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import PropTypes from "prop-types";
 
+import { axiosClient } from "@/helper/axios/axiosClient";
 import { renderStars } from "@/helper/renderStar";
 import useCartStore from "@/store/cart/useCartStore";
 import useScaleCart from "@/store/isScaleCart";
@@ -14,13 +15,9 @@ import useNotification from "@/store/showNotification";
 function Card(props) {
   const { product } = props;
 
-  const { data: session } = useSession();
-
   const timeoutNotificationRef = useRef(null);
 
   const timeoutScaleRef = useRef(null);
-
-  const router = useRouter();
 
   const addToCart = useCartStore((state) => state.addToCart);
 
@@ -33,50 +30,67 @@ function Card(props) {
   const closeScaleCart = useScaleCart((state) => state.closeScaleCart);
 
   const handleClickAddToCart = useCallback(
-    (item) => {
-      if (session && session.user) {
-        const data = {
-          id: item.id,
-          name: item.title,
-          image: item?.image || item?.images[0],
-          price: item.price,
-          quantity: 1,
-        };
+    async (item) => {
+      const getToken = getCookie("TOKEN");
+      const getRefreshToken = getCookie("REFRESH_TOKEN");
 
-        addToCart(data);
+      try {
+        const url = "/authCustomers/profile";
 
-        openScaleCart();
+        const response = await axiosClient.get(url);
 
-        if (timeoutScaleRef.current) {
-          clearTimeout(timeoutScaleRef.current);
+        if (getToken && getRefreshToken && response.data.payload) {
+          const data = {
+            id: item.id,
+            name: item.title,
+            image: item?.image || item?.images[0],
+            price: item.price,
+            quantity: 1,
+          };
+
+          addToCart(data);
+
+          openScaleCart();
+
+          if (timeoutScaleRef.current) {
+            clearTimeout(timeoutScaleRef.current);
+          }
+
+          timeoutScaleRef.current = setTimeout(() => {
+            closeScaleCart();
+
+            clearTimeout(timeoutScaleRef.current);
+
+            timeoutScaleRef.current = null;
+          }, 100);
+
+          openNotification();
+
+          if (timeoutNotificationRef.current) {
+            clearTimeout(timeoutNotificationRef.current);
+          }
+
+          timeoutNotificationRef.current = setTimeout(() => {
+            closeNotification();
+
+            clearTimeout(timeoutNotificationRef.current);
+
+            timeoutNotificationRef.current = null;
+          }, 3000);
+        } else {
+          deleteCookie("TOKEN");
+          deleteCookie("REFRESH_TOKEN");
+          deleteCookie("email");
+          signOut({ callbackUrl: "/log-in" });
         }
-
-        timeoutScaleRef.current = setTimeout(() => {
-          closeScaleCart();
-
-          clearTimeout(timeoutScaleRef.current);
-
-          timeoutScaleRef.current = null;
-        }, 100);
-
-        openNotification();
-
-        if (timeoutNotificationRef.current) {
-          clearTimeout(timeoutNotificationRef.current);
-        }
-
-        timeoutNotificationRef.current = setTimeout(() => {
-          closeNotification();
-
-          clearTimeout(timeoutNotificationRef.current);
-
-          timeoutNotificationRef.current = null;
-        }, 3000);
-      } else {
-        router.push("/log-in");
+      } catch (error) {
+        deleteCookie("TOKEN");
+        deleteCookie("REFRESH_TOKEN");
+        deleteCookie("email");
+        signOut({ callbackUrl: "/log-in" });
       }
     },
-    [addToCart, closeNotification, closeScaleCart, openNotification, openScaleCart, router, session],
+    [addToCart, closeNotification, closeScaleCart, openNotification, openScaleCart],
   );
 
   return (

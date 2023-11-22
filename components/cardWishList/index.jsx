@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { getCookie } from "cookies-next";
+import React, { useCallback, useRef } from "react";
+import { deleteCookie, getCookie } from "cookies-next";
 import { ShoppingCart, Trash2 } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { signOut } from "next-auth/react";
 import PropTypes from "prop-types";
 
+import { axiosClient } from "@/helper/axios/axiosClient";
 import useCartStore from "@/store/cart/useCartStore";
 import useScaleCart from "@/store/isScaleCart";
 import useNotification from "@/store/showNotification";
@@ -16,8 +17,6 @@ function CardWishList(props) {
 
   const timeoutScaleRef = useRef(null);
 
-  const router = useRouter();
-
   const addToCart = useCartStore((state) => state.addToCart);
 
   const openNotification = useNotification((state) => state.openNotification);
@@ -28,59 +27,68 @@ function CardWishList(props) {
 
   const closeScaleCart = useScaleCart((state) => state.closeScaleCart);
 
-  const getToken = getCookie("TOKEN");
-
-  const [token, setToken] = useState("");
-
-  useEffect(() => {
-    setToken(getToken);
-  }, [getToken]);
-
   const handleClickAddToCart = useCallback(
-    (item) => {
-      if (token) {
-        const data = {
-          id: item.id,
-          name: item.title,
-          image: item?.image || item?.images[0],
-          price: item.price,
-          quantity: 1,
-        };
+    async (item) => {
+      const getToken = getCookie("TOKEN");
+      const getRefreshToken = getCookie("REFRESH_TOKEN");
 
-        addToCart(data);
+      try {
+        const url = "/authCustomers/profile";
 
-        openScaleCart();
+        const response = await axiosClient.get(url);
 
-        if (timeoutScaleRef.current) {
-          clearTimeout(timeoutScaleRef.current);
+        if (getToken && getRefreshToken && response.data.payload) {
+          const data = {
+            id: item.id,
+            name: item.title,
+            image: item?.image || item?.images[0],
+            price: item.price,
+            quantity: 1,
+          };
+
+          addToCart(data);
+
+          openScaleCart();
+
+          if (timeoutScaleRef.current) {
+            clearTimeout(timeoutScaleRef.current);
+          }
+
+          timeoutScaleRef.current = setTimeout(() => {
+            closeScaleCart();
+
+            clearTimeout(timeoutScaleRef.current);
+
+            timeoutScaleRef.current = null;
+          }, 100);
+
+          openNotification();
+
+          if (timeoutNotificationRef.current) {
+            clearTimeout(timeoutNotificationRef.current);
+          }
+
+          timeoutNotificationRef.current = setTimeout(() => {
+            closeNotification();
+
+            clearTimeout(timeoutNotificationRef.current);
+
+            timeoutNotificationRef.current = null;
+          }, 3000);
+        } else {
+          deleteCookie("TOKEN");
+          deleteCookie("REFRESH_TOKEN");
+          deleteCookie("email");
+          signOut({ callbackUrl: "/log-in" });
         }
-
-        timeoutScaleRef.current = setTimeout(() => {
-          closeScaleCart();
-
-          clearTimeout(timeoutScaleRef.current);
-
-          timeoutScaleRef.current = null;
-        }, 100);
-
-        openNotification();
-
-        if (timeoutNotificationRef.current) {
-          clearTimeout(timeoutNotificationRef.current);
-        }
-
-        timeoutNotificationRef.current = setTimeout(() => {
-          closeNotification();
-
-          clearTimeout(timeoutNotificationRef.current);
-
-          timeoutNotificationRef.current = null;
-        }, 3000);
-      } else {
-        router.push("/log-in");
+      } catch (error) {
+        deleteCookie("TOKEN");
+        deleteCookie("REFRESH_TOKEN");
+        deleteCookie("email");
+        signOut({ callbackUrl: "/log-in" });
       }
     },
-    [addToCart, closeNotification, closeScaleCart, openNotification, openScaleCart, router, token],
+    [addToCart, closeNotification, closeScaleCart, openNotification, openScaleCart],
   );
 
   return (
