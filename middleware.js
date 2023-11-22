@@ -35,8 +35,6 @@ export default async function middleware(req, res) {
 
   const getToken = getCookie("TOKEN", { req, res });
   const getRefreshToken = getCookie("REFRESH_TOKEN", { req, res });
-  console.log("««««« getToken »»»»»", getToken);
-  console.log("««««« getRefreshToken »»»»»", getRefreshToken);
 
   if (req.nextUrl.pathname === "/log-in" || req.nextUrl.pathname === "/sign-up") {
     if (getToken && getRefreshToken) {
