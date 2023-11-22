@@ -35,6 +35,8 @@ export default async function middleware(req, res) {
 
   const getToken = getCookie("TOKEN", { req, res });
   const getRefreshToken = getCookie("REFRESH_TOKEN", { req, res });
+  console.log("««««« getToken »»»»»", getToken);
+  console.log("««««« getRefreshToken »»»»»", getRefreshToken);
 
   if (req.nextUrl.pathname === "/log-in" || req.nextUrl.pathname === "/sign-up") {
     if (getToken && getRefreshToken) {
@@ -44,11 +46,19 @@ export default async function middleware(req, res) {
     return NextResponse.rewrite(currentUrl);
   }
 
-  if (getToken && getRefreshToken) {
-    return NextResponse.rewrite(currentUrl);
+  if (
+    req.nextUrl.pathname === "/cart" ||
+    req.nextUrl.pathname === "/wish-list" ||
+    req.nextUrl.pathname === "/account"
+  ) {
+    if (getToken && getRefreshToken) {
+      return NextResponse.rewrite(currentUrl);
+    }
+
+    return NextResponse.redirect(new URL("/log-in", req.url));
   }
 
-  return NextResponse.redirect(new URL("/log-in", req.url));
+  return NextResponse.rewrite(currentUrl);
 }
 
 export const config = {
