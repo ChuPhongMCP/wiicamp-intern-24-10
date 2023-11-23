@@ -11,18 +11,12 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
   return (
     <>
       <Head>
-        <meta name="E-Shop-head" content="1" />
         <title>E-Shop | specializes in technology sales</title>
-        <meta name="E-Shop-head" content="1" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <meta name="E-Shop-head" content="1" />
         <meta content="provides technological equipment and electronic equipment" name="description" key="desc" />
-        <meta name="E-Shop-head" content="1" />
         <meta content="E-Shop | specializes in technology sales" property="og:title" />
-        <meta name="E-Shop-head" content="1" />
         <meta content="provides technological equipment and electronic equipment" property="og:description" />
-        <meta name="E-Shop-head" content="1" />
-        <meta content="/assets/images/banner/1.png" property="og:image" />
+        <meta content="https://pub-50cd0051de0b47509baf9c4fc482606a.r2.dev/demobackend/meta.jpg" property="og:image" />
       </Head>
 
       <SessionProvider session={session} refetchOnWindowFocus={false} refetchWhenOffline={false}>
