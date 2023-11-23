@@ -97,7 +97,9 @@ function Card(props) {
     <div className="flex flex-col items-start gap-[1rem] rounded-[0.25rem]">
       <div className="group relative flex items-center justify-center min-w-[16.875rem] min-h-[15.625rem] rounded-[0.25rem] bg-primary-1">
         <div className="absolute top-[0.75rem] left-[0.75rem] inline-flex px-[0.75rem] py-[0.25rem] justify-center items-center gap-[0.625rem] rounded-[0.25rem] bg-secondary-2">
-          <span className="text-text-1 font-poppins text-[0.75rem] font-[400] leading-[1.125rem]">-40%</span>
+          <span className="text-text-1 font-poppins text-[0.75rem] font-[400] leading-[1.125rem]">
+            -{product.discount}%
+          </span>
         </div>
 
         <div className="absolute top-[0.75rem] right-[0.75rem] inline-flex flex-col items-start gap-[0.5rem]">
@@ -143,7 +145,9 @@ function Card(props) {
         </h4>
 
         <div className="flex items-start gap-[0.57rem]">
-          <div className="text-secondary-2 font-poppins text-[1rem] font-[500] leading-[1.5rem]">${product?.price}</div>
+          <div className="text-secondary-2 font-poppins text-[1rem] font-[500] leading-[1.5rem]">
+            ${product?.discountedPrice}
+          </div>
 
           <div className="text-text-2 font-poppins text-[1rem] font-[500] leading-[1.5rem] line-through opacity-[0.5]">
             ${product?.price}
