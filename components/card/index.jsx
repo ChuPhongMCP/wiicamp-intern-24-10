@@ -104,6 +104,7 @@ function Card(props) {
 
         <div className="absolute top-[0.75rem] right-[0.75rem] inline-flex flex-col items-start gap-[0.5rem]">
           <button
+            title="love"
             type="button"
             className="flex items-center justify-center bg-white rounded-full min-w-[2.125rem] min-h-[2.125rem]"
           >
@@ -111,6 +112,7 @@ function Card(props) {
           </button>
 
           <Link
+            title="view"
             href={`/${product.id}`}
             className="flex items-center justify-center bg-white rounded-full min-w-[2.125rem] min-h-[2.125rem]"
           >

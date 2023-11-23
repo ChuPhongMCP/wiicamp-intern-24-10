@@ -405,6 +405,7 @@ function Header() {
             </form>
 
             <Link
+              title="wish list"
               className="group rounded-full hover:bg-secondary-2 transition-colors ease-in-out duration-300 w-[2rem] h-[2rem] ml-[1.5rem] mr-[1rem] flex justify-center items-center"
               href="/wish-list"
             >
@@ -428,6 +429,7 @@ function Header() {
             </Link>
 
             <button
+              title="user"
               ref={refClickUser}
               onClick={openUserSettingMenu}
               type="button"
@@ -546,6 +548,7 @@ function Header() {
           )}
         >
           <button
+            title="cancel"
             type="button"
             onClick={closeDrawerRight}
             className="hover:opacity-50 transition-opacity ease-in-out duration-300 absolute top-3 left-3"
@@ -656,6 +659,7 @@ function Header() {
               )}
 
               <button
+                title="search"
                 onClick={closeDrawerRight}
                 type="submit"
                 className="hover:opacity-50 transition-opacity ease-in-out duration-300 absolute top-[3px] right-[6px]"

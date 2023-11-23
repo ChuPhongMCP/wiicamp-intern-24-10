@@ -7,6 +7,7 @@ function ArrowCategoriesCarousel(props) {
   return (
     <div className="absolute top-[-6.6rem] right-0 flex gap-[0.5rem]">
       <button
+        title="prev"
         type="button"
         className="flex items-center justify-center min-w-[2.875rem] min-h-[2.875rem] bg-secondary-2 rounded-[5rem]"
         onClick={prev}
@@ -15,6 +16,7 @@ function ArrowCategoriesCarousel(props) {
       </button>
 
       <button
+        title="next"
         type="button"
         className="flex items-center justify-center min-w-[2.875rem] min-h-[2.875rem] bg-secondary-2 rounded-[5rem]"
         onClick={next}
