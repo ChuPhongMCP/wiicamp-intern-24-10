@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Head from "next/head";
 import PropTypes from "prop-types";
 
 import BestSelling from "@/components/bestSelling";
@@ -24,39 +25,49 @@ export default function Home({ products, bestSelling }) {
   }, [addKeySuggest, products]);
 
   return (
-    <main className="">
-      <section>
-        <Slider />
-      </section>
+    <>
+      <Head>
+        <title>Exclusive | specializes in technology sales</title>
+        <meta name="description" content="provides technological equipment and electronic equipment" key="desc" />
+        <meta property="og:title" content="Exclusive | specializes in technology sales" />
+        <meta property="og:description" content="provides technological equipment and electronic equipment" />
+        <meta property="og:image" content="/assets/images/banner/banner1.jpg" />
+      </Head>
 
-      <section>
-        <FlashSale products={products} />
-      </section>
+      <main className="">
+        <section>
+          <Slider />
+        </section>
 
-      <section>
-        <CategoriesBrowse categories={categories} />
-      </section>
+        <section>
+          <FlashSale products={products} />
+        </section>
 
-      <section>
-        <BestSelling bestSelling={bestSelling} />
-      </section>
+        <section>
+          <CategoriesBrowse categories={categories} />
+        </section>
 
-      <section>
-        <SaleHunter />
-      </section>
+        <section>
+          <BestSelling bestSelling={bestSelling} />
+        </section>
 
-      <section>
-        <OurProducts products={products} />
-      </section>
+        <section>
+          <SaleHunter />
+        </section>
 
-      <section>
-        <NewArrival />
-      </section>
+        <section>
+          <OurProducts products={products} />
+        </section>
 
-      <section>
-        <Services />
-      </section>
-    </main>
+        <section>
+          <NewArrival />
+        </section>
+
+        <section>
+          <Services />
+        </section>
+      </main>
+    </>
   );
 }
 
