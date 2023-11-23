@@ -396,6 +396,7 @@ function Header() {
               )}
 
               <button
+                title="search"
                 type="submit"
                 className="hover:opacity-50 transition-opacity ease-in-out duration-300 absolute top-[5px] lg:top-[7px] right-[12px]"
               >
