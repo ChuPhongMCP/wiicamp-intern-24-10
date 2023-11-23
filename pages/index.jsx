@@ -36,7 +36,7 @@ export default function Home({ products, bestSelling }) {
         <meta name="E-Shop-head" content="1" />
         <meta content="provides technological equipment and electronic equipment" property="og:description" />
         <meta name="E-Shop-head" content="1" />
-        <meta content="/assets/images/banner/banner1.jpg" property="og:image" />
+        <meta content="/assets/images/banner/1.png" property="og:image" />
       </Head>
 
       <section>
