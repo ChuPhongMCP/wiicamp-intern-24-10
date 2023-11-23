@@ -30,7 +30,7 @@ function Footer() {
               className="text-text-1 bg-text-2 font-poppins text-[1rem] font-[400] leading-[1.5rem] opacity-[0.4] max-w-[8.125rem]"
             />
 
-            <button type="submit" className="min-w-[1.5rem] min-h-[1.5rem] flex-shrink-0">
+            <button title="send mail" type="submit" className="min-w-[1.5rem] min-h-[1.5rem] flex-shrink-0">
               <SendHorizontal color="#FAFAFA" />
             </button>
           </form>
