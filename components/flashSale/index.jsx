@@ -21,32 +21,28 @@ function FlashSale(props) {
   }, []);
 
   return (
-    <>
-      <div className="container mt-[8.75rem]">
-        <div className="lg:flex grid grid-cols-12 items-end gap-[2rem] lg:gap-[5.4375rem] mb-[2.5rem]">
-          <div className="lg:flex grid col-span-12 max-w-[37.5rem] max-h-[6.4375rem] flex-col items-start gap-[1.5rem]">
-            <div className="flex items-center gap-[1rem]">
-              <div className="min-w-[1.25rem] min-h-[2.5rem]">
-                <Rectangle />
-              </div>
-
-              <h3 className="text-secondary-2 font-poppins text-[1rem] font-[600] leading-[1.25rem]">
-                {useTrans("flashSale.today")}
-              </h3>
+    <div className="container mt-[8.75rem] mb-[5rem] pb-[3.75rem] pt-[1rem] bg-[url('/assets/images/background/2.png')] rounded-[0.25rem]">
+      <div className="lg:flex grid grid-cols-12 items-end gap-[2rem] lg:gap-[5.4375rem] mb-[2.5rem]">
+        <div className="lg:flex grid col-span-12 max-w-[37.5rem] max-h-[6.4375rem] flex-col items-start gap-[1.5rem]">
+          <div className="flex items-center gap-[1rem]">
+            <div className="min-w-[1.25rem] min-h-[2.5rem]">
+              <Rectangle />
             </div>
 
-            <h2 className="text-text-2 font-inter text-[2.25rem] font-[600] leading-[3rem] tracking-[0.09rem] whitespace-nowrap">
-              {useTrans("flashSale.flashSale")}
-            </h2>
+            <h3 className="text-secondary-2 font-poppins text-[1rem] font-[600] leading-[1.25rem]">
+              {useTrans("flashSale.today")}
+            </h3>
           </div>
 
-          <TimeFlashSale second={timeToEndSale} />
+          <h2 className="text-white font-inter text-[2.25rem] font-[600] leading-[3rem] tracking-[0.09rem] whitespace-nowrap">
+            {useTrans("flashSale.flashSale")}
+          </h2>
         </div>
+
+        <TimeFlashSale second={timeToEndSale} />
       </div>
 
-      <div className="max-w-[90rem] mr-auto ml-auto">
-        <FlashSaleCarousel products={products} />
-      </div>
+      <FlashSaleCarousel products={products} />
 
       <div className="text-center mt-[3.75rem]">
         <Link href="/">
@@ -54,10 +50,10 @@ function FlashSale(props) {
         </Link>
       </div>
 
-      <div className="container mt-[3.75rem] mb-[5rem]">
+      {/* <div className="container mt-[3.75rem] mb-[5rem]">
         <hr className="border-1 border-solid border-black border-opacity-30" />
-      </div>
-    </>
+      </div> */}
+    </div>
   );
 }
 

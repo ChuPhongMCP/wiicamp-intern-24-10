@@ -46,17 +46,17 @@ function FlashSaleCarousel(props) {
 
         {/* Multi Carousel FlashSale */}
         <Swiper
-          breakpoints={{
-            0: {
-              slidesOffsetBefore: 16,
-            },
-            1170: {
-              slidesOffsetBefore: 16,
-            },
-            1440: {
-              slidesOffsetBefore: 135,
-            },
-          }}
+          // breakpoints={{
+          //   0: {
+          //     slidesOffsetBefore: 16,
+          //   },
+          //   1170: {
+          //     slidesOffsetBefore: 16,
+          //   },
+          //   1440: {
+          //     slidesOffsetBefore: 135,
+          //   },
+          // }}
           ref={swiperFlashSale}
           slidesPerView="auto"
           spaceBetween={30}
@@ -73,7 +73,7 @@ function FlashSaleCarousel(props) {
         >
           {products.map((item) => {
             return (
-              <SwiperSlide key={item.title}>
+              <SwiperSlide key={item.name}>
                 <Card product={item} />
               </SwiperSlide>
             );

@@ -207,7 +207,7 @@ function Header() {
     if (inputSearch) {
       const filterKey = keySuggest.filter((item) => {
         const keySearchRegex = fuzzySearch(inputSearch);
-        return keySearchRegex.test(item.title);
+        return keySearchRegex.test(item.name);
       });
 
       setFilterKeySearch(filterKey);
@@ -378,16 +378,16 @@ function Header() {
                   {filterKeySearch?.map((item) => {
                     return (
                       <li
-                        key={item.title}
+                        key={item.name}
                         className="hover:opacity-50 transition-opacity inline-flex items-center justify-start whitespace-nowrap max-w-[16rem] min-h-[2rem] overflow-x-hidden text-ellipsis text-text-2 font-poppins text-[1rem] font-[400] leading-[1.125rem]"
                       >
                         <Link
                           onClick={() => {
                             setIsOpenSuggest(false);
                           }}
-                          href={`/search-products?key=${item.title}`}
+                          href={`/search-products?key=${item.name}`}
                         >
-                          {item.title}
+                          {item.name}
                         </Link>
                       </li>
                     );
@@ -637,16 +637,16 @@ function Header() {
                   {filterKeySearch?.map((item) => {
                     return (
                       <li
-                        key={item.title}
+                        key={item.name}
                         className="hover:opacity-50 transition-opacity inline-flex items-center justify-start whitespace-nowrap max-w-[16rem] min-h-[2rem] overflow-x-hidden text-ellipsis text-text-2 font-poppins text-[1rem] font-[400] leading-[1.125rem]"
                       >
                         <Link
                           onClick={() => {
                             setIsOpenSuggestOnDrawder(false);
                           }}
-                          href={`/search-products?key=${item.title}`}
+                          href={`/search-products?key=${item.name}`}
                         >
-                          {item.title}
+                          {item.name}
                         </Link>
                       </li>
                     );
