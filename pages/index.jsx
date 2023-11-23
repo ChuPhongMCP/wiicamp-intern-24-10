@@ -27,46 +27,49 @@ export default function Home({ products, bestSelling }) {
   return (
     <>
       <Head>
-        <title>Exclusive | specializes in technology sales</title>
-        <meta name="description" content="provides technological equipment and electronic equipment" key="desc" />
-        <meta property="og:title" content="Exclusive | specializes in technology sales" />
-        <meta property="og:description" content="provides technological equipment and electronic equipment" />
-        <meta property="og:image" content="/assets/images/banner/banner1.jpg" />
+        <meta name="E-Shop-head" content="1" />
+        <title>E-Shop | specializes in technology sales</title>
+        <meta name="E-Shop-head" content="1" />
+        <meta content="provides technological equipment and electronic equipment" name="description" key="desc" />
+        <meta name="E-Shop-head" content="1" />
+        <meta content="E-Shop | specializes in technology sales" property="og:title" />
+        <meta name="E-Shop-head" content="1" />
+        <meta content="provides technological equipment and electronic equipment" property="og:description" />
+        <meta name="E-Shop-head" content="1" />
+        <meta content="/assets/images/banner/banner1.jpg" property="og:image" />
       </Head>
 
-      <main className="">
-        <section>
-          <Slider />
-        </section>
+      <section>
+        <Slider />
+      </section>
 
-        <section>
-          <FlashSale products={products} />
-        </section>
+      <section>
+        <FlashSale products={products} />
+      </section>
 
-        <section>
-          <CategoriesBrowse categories={categories} />
-        </section>
+      <section>
+        <CategoriesBrowse categories={categories} />
+      </section>
 
-        <section>
-          <BestSelling bestSelling={bestSelling} />
-        </section>
+      <section>
+        <BestSelling bestSelling={bestSelling} />
+      </section>
 
-        <section>
-          <SaleHunter />
-        </section>
+      <section>
+        <SaleHunter />
+      </section>
 
-        <section>
-          <OurProducts products={products} />
-        </section>
+      <section>
+        <OurProducts products={products} />
+      </section>
 
-        <section>
-          <NewArrival />
-        </section>
+      <section>
+        <NewArrival />
+      </section>
 
-        <section>
-          <Services />
-        </section>
-      </main>
+      <section>
+        <Services />
+      </section>
     </>
   );
 }
@@ -79,19 +82,14 @@ Home.propTypes = {
 export async function getServerSideProps() {
   try {
     const [response, bestSelling] = await Promise.all([
-      axiosServer.get("https://fakestoreapi.com/products"),
-      axiosServer.get("https://fakestoreapi.com/products?limit=4"),
+      axiosServer.get("/products"),
+      axiosServer.get("/products?page=1&pageSize=4"),
     ]);
-
-    // const [response, bestSelling] = await Promise.all([
-    //   axiosServer.get("https://api.escuelajs.co/api/v1/products/?limit=20"),
-    //   axiosServer.get("https://api.escuelajs.co/api/v1/products/?limit=4"),
-    // ]);
 
     return {
       props: {
-        products: response.data || [],
-        bestSelling: bestSelling.data || [],
+        products: response.data.payload || [],
+        bestSelling: bestSelling.data.payload || [],
       },
 
       // revalidate: 24 * 60 * 60,

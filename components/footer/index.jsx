@@ -101,16 +101,16 @@ function Footer() {
 
               <div className="flex items-center gap-[0.5rem]">
                 <div className="flex min-w-[5rem] min-h-[5rem] p-[0.125rem] justify-center items-center">
-                  <Image src="/assets/images/footer/qrCode.png" width={76} height={76} priority alt="..." />
+                  <Image src="/assets/images/footer/qrCode.png" width={1000} height={1000} priority alt="..." />
                 </div>
 
                 <div className="flex flex-col items-start gap-[0.25rem]">
                   <div className="min-w-[6.875rem] min-h-[2.5rem]">
-                    <Image src="/assets/images/footer/googlePlay.png" width={110} height={40} priority alt="..." />
+                    <Image src="/assets/images/footer/googlePlay.png" width={1000} height={1000} priority alt="..." />
                   </div>
 
                   <div className="min-w-[6.875rem] min-h-[2.5rem]">
-                    <Image src="/assets/images/footer/appStore.png" width={110} height={40} priority alt="..." />
+                    <Image src="/assets/images/footer/appStore.png" width={1000} height={1000} priority alt="..." />
                   </div>
                 </div>
               </div>

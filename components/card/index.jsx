@@ -42,8 +42,8 @@ function Card(props) {
         if (getToken && getRefreshToken && response.data.payload) {
           const data = {
             id: item.id,
-            name: item.title,
-            image: item?.image || item?.images[0],
+            name: item.name,
+            image: item.image,
             price: item.price,
             quantity: 1,
           };
@@ -94,10 +94,12 @@ function Card(props) {
   );
 
   return (
-    <div className="flex flex-col items-start gap-[1rem]">
+    <div className="flex flex-col items-start gap-[1rem] rounded-[0.25rem]">
       <div className="group relative flex items-center justify-center min-w-[16.875rem] min-h-[15.625rem] rounded-[0.25rem] bg-primary-1">
         <div className="absolute top-[0.75rem] left-[0.75rem] inline-flex px-[0.75rem] py-[0.25rem] justify-center items-center gap-[0.625rem] rounded-[0.25rem] bg-secondary-2">
-          <span className="text-text-1 font-poppins text-[0.75rem] font-[400] leading-[1.125rem]">-40%</span>
+          <span className="text-text-1 font-poppins text-[0.75rem] font-[400] leading-[1.125rem]">
+            -{product.discount}%
+          </span>
         </div>
 
         <div className="absolute top-[0.75rem] right-[0.75rem] inline-flex flex-col items-start gap-[0.5rem]">
@@ -116,15 +118,17 @@ function Card(props) {
           </Link>
         </div>
 
-        <Image
-          className="max-w-[16.875rem] max-h-[15.625rem] object-contain"
-          src={product?.image || product?.images[0]}
-          alt="..."
-          width={172}
-          height={152}
-          priority
-          style={{ width: "100%", height: "auto" }}
-        />
+        <Link href={`/${product.id}`}>
+          <Image
+            className="min-w-[16.875rem] min-h-[15.625rem] object-contain rounded-[0.25rem]"
+            src={product?.image}
+            alt="..."
+            width={1000}
+            height={1000}
+            priority
+            style={{ width: "100%", height: "auto" }}
+          />
+        </Link>
 
         <button
           onClick={() => handleClickAddToCart(product)}
@@ -135,13 +139,15 @@ function Card(props) {
         </button>
       </div>
 
-      <div className="flex flex-col items-start gap-[0.5rem]">
+      <div className="pl-[0.5rem] pb-[0.5rem] flex flex-col items-start gap-[0.5rem]">
         <h4 className="text-text-2 max-w-[16.875rem] truncate font-poppins text-[1rem] font-[500] leading-[1.5rem] overflow-hidden">
-          {product?.title}
+          <Link href={`/${product.id}`}>{product?.name}</Link>
         </h4>
 
         <div className="flex items-start gap-[0.57rem]">
-          <div className="text-secondary-2 font-poppins text-[1rem] font-[500] leading-[1.5rem]">${product?.price}</div>
+          <div className="text-secondary-2 font-poppins text-[1rem] font-[500] leading-[1.5rem]">
+            ${product?.discountedPrice}
+          </div>
 
           <div className="text-text-2 font-poppins text-[1rem] font-[500] leading-[1.5rem] line-through opacity-[0.5]">
             ${product?.price}
@@ -149,10 +155,10 @@ function Card(props) {
         </div>
 
         <div className="flex items-start gap-[0.5rem]">
-          <div className="flex items-start">{renderStars(product?.rating?.rate || 4.5)}</div>
+          <div className="flex items-start">{renderStars(product?.rate || 4.5)}</div>
 
           <div className="min-w-[2rem] min-h-[1.25rem] text-text-2 font-poppins text-[0.875rem] font-[600] leading-[1.3125rem] opacity-[0.5]">
-            ({product?.rating?.count || 99})
+            ({product?.rateCount || 99})
           </div>
         </div>
       </div>
