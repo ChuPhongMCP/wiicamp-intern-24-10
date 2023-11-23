@@ -45,6 +45,7 @@ function SignUp() {
   }, []);
 
   const onSubmit = useCallback((data) => {
+    // eslint-disable-next-line no-console
     console.log("««««« data »»»»»", data);
   }, []);
 
