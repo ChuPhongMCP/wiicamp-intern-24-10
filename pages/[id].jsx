@@ -25,15 +25,10 @@ function ProductDetailPage(props) {
   return (
     <>
       <Head>
-        <meta name="E-Shop-head" content="1" />
         <title>{product.name}</title>
-        <meta name="E-Shop-head" content="1" />
         <meta content={product.description} name="description" key="desc" />
-        <meta name="E-Shop-head" content="1" />
         <meta content={product.name} property="og:title" />
-        <meta name="E-Shop-head" content="1" />
         <meta content={product.description} property="og:description" />
-        <meta name="E-Shop-head" content="1" />
         <meta content={product.image} property="og:image" />
       </Head>
 
