@@ -15,7 +15,7 @@ import Card from "../card";
 import "swiper/css";
 
 function FlashSaleCarousel(props) {
-  const { products } = props;
+  const { flashSales } = props;
 
   const swiperFlashSale = useRef();
 
@@ -35,7 +35,7 @@ function FlashSaleCarousel(props) {
     swiperFlashSale?.current?.swiper?.slidePrev();
   }, []);
 
-  if (products.length > 0) {
+  if (flashSales.length > 0) {
     return (
       <div
         onMouseEnter={handleMouseEnter}
@@ -71,7 +71,7 @@ function FlashSaleCarousel(props) {
           modules={[Autoplay]}
           className="swiper_flash_sale"
         >
-          {products.map((item) => {
+          {flashSales.map((item) => {
             return (
               <SwiperSlide key={item.name}>
                 <Card product={item} />
@@ -95,5 +95,5 @@ function FlashSaleCarousel(props) {
 export default FlashSaleCarousel;
 
 FlashSaleCarousel.propTypes = {
-  products: PropTypes.instanceOf(Array).isRequired,
+  flashSales: PropTypes.instanceOf(Array).isRequired,
 };

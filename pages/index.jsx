@@ -15,7 +15,7 @@ import { categories } from "@/data/categoriesItems.jsx";
 import { axiosServer } from "@/helper/axios/axiosServer";
 import useKeySuggest from "@/store/keySuggest/useKeySuggest";
 
-export default function Home({ products, bestSelling }) {
+export default function Home({ products, bestSelling, flashSales }) {
   const addKeySuggest = useKeySuggest((state) => state.addKeySuggest);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function Home({ products, bestSelling }) {
       </section>
 
       <section>
-        <FlashSale products={products} />
+        <FlashSale flashSales={flashSales} />
       </section>
 
       <section>
@@ -72,19 +72,22 @@ export default function Home({ products, bestSelling }) {
 Home.propTypes = {
   products: PropTypes.instanceOf(Array).isRequired,
   bestSelling: PropTypes.instanceOf(Array).isRequired,
+  flashSales: PropTypes.instanceOf(Array).isRequired,
 };
 
 export async function getServerSideProps() {
   try {
-    const [response, bestSelling] = await Promise.all([
+    const [response, bestSelling, flashSales] = await Promise.all([
       axiosServer.get("/products"),
       axiosServer.get("/products?page=1&pageSize=4"),
+      axiosServer.get("/flashSale"),
     ]);
 
     return {
       props: {
         products: response.data.payload || [],
         bestSelling: bestSelling.data.payload || [],
+        flashSales: flashSales.data.payload || [],
       },
 
       // revalidate: 24 * 60 * 60,
@@ -95,6 +98,7 @@ export async function getServerSideProps() {
       props: {
         products: [],
         bestSelling: [],
+        flashSales: [],
       },
     };
   }
