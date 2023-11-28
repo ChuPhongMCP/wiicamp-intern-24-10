@@ -41,10 +41,10 @@ function Card(props) {
 
         if (getToken && getRefreshToken && response.data.payload) {
           const data = {
-            id: item.id,
+            productId: item.id,
             name: item.name,
             image: item.image,
-            price: item.price,
+            price: item.discountedPrice,
             quantity: 1,
           };
 

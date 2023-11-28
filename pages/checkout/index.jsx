@@ -263,7 +263,13 @@ function Checkout() {
 
           <div className="min-w-[20rem] sm:min-w-[26.6875rem] flex items-center justify-between">
             <label htmlFor="bank" className="transition-opacity flex items-center justify-center gap-[1rem]">
-              <input className="min-w-[1.5rem] min-h-[1.5rem] accent-secondary-2" type="radio" id="bank" name="bank" />
+              <input
+                className="min-w-[1.5rem] min-h-[1.5rem] accent-secondary-2"
+                type="radio"
+                id="bank"
+                name="bank-cash"
+                value="bank"
+              />
 
               <span className="text-text-2 font-poppins text-[1rem] font-[400] leading-[1.5rem]">Bank</span>
             </label>
@@ -319,7 +325,13 @@ function Checkout() {
             htmlFor="cash"
             className="min-w-[20rem] sm:min-w-[26.6rem] transition-opacity flex items-center justify-start gap-[1rem]"
           >
-            <input className="min-w-[1.5rem] min-h-[1.5rem] accent-secondary-2" type="radio" id="cash" name="cash" />
+            <input
+              className="min-w-[1.5rem] min-h-[1.5rem] accent-secondary-2"
+              type="radio"
+              id="cash"
+              name="bank-cash"
+              value="cash"
+            />
 
             <span className="text-text-2 font-poppins text-[1rem] font-[400] leading-[1.5rem]">Cash on delivery</span>
           </label>
